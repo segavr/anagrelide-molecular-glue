@@ -1,0 +1,7 @@
+compound,class,smiles,formula,mol_weight,rdkit_logp,tpsa,num_aromatic_rings,num_h_donors,num_h_acceptors
+milrinone,classical_inhibitor,Cc1[nH]c(=O)c(C#N)cc1-c1ccncc1,C12H9N3O,211.22,1.62,69.54,2,1,3
+amrinone,classical_inhibitor,Nc1cc(-c2ccncc2)c[nH]c1=O,C10H9N3O,187.2,1.02,71.77,2,2,3
+enoximone,classical_inhibitor,CSc1ccc(C(=O)c2[nH]c(=O)[nH]c2C)cc1,C12H12N2O2S,248.31,1.96,65.72,2,2,3
+cilostazol,classical_inhibitor,O=C1CCc2cc(OCCCCc3nnnn3C3CCCCC3)ccc2N1,C20H27N5O2,369.47,3.46,81.93,2,1,6
+cilostamide,classical_inhibitor,CN(C(=O)CCCOc1ccc2[nH]c(=O)ccc2c1)C1CCCCC1,C20H26N2O3,342.44,3.48,62.4,2,1,3
+imazodan,classical_inhibitor,O=C1CCC(c2ccc(-n3ccnc3)cc2)=NN1,C13H12N4O,240.27,1.49,59.28,2,1,4
