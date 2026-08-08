@@ -23,9 +23,9 @@ Chen et al., Nat Commun 2021, 12:6204, Supplementary Table 2 (22 anagrelide anal
 
 1. **Structure verification caught real errors**: three structural ambiguities were found and corrected during dataset construction by cross-checking against the paper's reported LogP — see notebooks/01_analysis_and_results.ipynb for details.
 
-2. **The paper's own "no correlation" claim doesn't fully hold up to a formal test**: Pearson correlation on the full dataset is statistically significant (r = -0.616 to -0.755 depending on LogP source, p < 0.01), contradicting the qualitative statement in Supplementary Note 1 — though removing two outlier compounds (A14, A2) explains the authors' intuition.
+2. **The paper's own "no correlation" claim doesn't fully hold up to a formal test**: both Pearson (linear) and Spearman (rank-based, outlier-robust) correlation between LogP and log10(IC50) are statistically significant on the full dataset (Pearson r = -0.623 to -0.750, p < 0.005; Spearman r = -0.504 to -0.606, p < 0.03, depending on LogP source), contradicting the qualitative statement in Supplementary Note 1. Removing two outlier compounds (A14, A2) drops both statistics well below significance for the paper's own LogP (Pearson p = 0.095, Spearman p = 0.232) — the fact that even the outlier-robust Spearman test loses significance strengthens the case that the authors' qualitative judgment reflects a genuine weak relationship in the remaining 17 compounds, not just a visual artifact of two extreme points.
 
-3. **Substituent hydrophobicity, not polarity, drives activity**: LogP and molecular weight are redundant predictors (r = 0.879 with each other); TPSA and H-bonding descriptors show no correlation with IC50.
+3. **Within this series, lipophilicity shows a stronger association with activity than the evaluated polarity-related descriptors**: LogP and molecular weight are redundant predictors (r = 0.879 with each other); TPSA and H-bonding descriptors show no significant correlation with IC50. This finding is specific to the ~19-compound anagrelide analog series analyzed here and should not be generalized beyond it.
 
 4. **Molecular glues are structurally distinguishable from classical PDE3A inhibitors**: significantly higher LogP (p = 0.035) and much lower TPSA (p = 0.0002, near-complete separation).
 
@@ -58,8 +58,10 @@ See [notebooks/01_analysis_and_results.ipynb](notebooks/01_analysis_and_results.
 
 ## Reproducing the Results
 
-pip install -r requirements.txt
+```bash
+# Requires RDKit, scipy, matplotlib, pandas
 python scripts/run_all.py
+```
 
 Note: pdb_structural_analysis.py requires data/7EG0.pdb, which must be downloaded manually from https://files.rcsb.org/download/7EG0.pdb (this step is optional and will be skipped automatically if the file isn't present).
 
