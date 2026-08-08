@@ -86,22 +86,52 @@ if __name__ == "__main__":
         correlation_report(detected, key, label, use_log=True, method="pearson")
         correlation_report(detected, key, label, use_log=True, method="spearman")
 
-    print("\n=== Investigating: are two outliers (A14, A2) driving significance? ===")
-    no_outliers = [r for r in detected if r["compound"] not in ("A14", "A2")]
-    for key, label in [("paper_logp", "Paper's LogP"), ("rdkit_logp", "Our RDKit LogP")]:
-        correlation_report(no_outliers, key, f"{label} (no A14/A2)", use_log=True, method="pearson")
-        correlation_report(no_outliers, key, f"{label} (no A14/A2)", use_log=True, method="spearman")
+    print("\n=== Investigating: which compounds are statistically influential? ===")
+    print("(Cook's distance identifies points with unusually large influence on the")
+    print(" regression fit -- more rigorous than picking outliers by eye from a plot.)")
 
-    print("\nConclusion: the full-dataset correlation IS statistically significant\n"
-          "(p<0.05) with both LogP sources and both Pearson and Spearman, contradicting\n"
-          "the paper's qualitative claim taken literally. However, removing A14\n"
-          "(unsubstituted) and A2 (F, weakly hydrophobic) -- both unusually high-IC50\n"
-          "outliers -- drops Pearson significance (paper's LogP: p=0.095) and Spearman\n"
-          "significance even further (p=0.232, the rank-based test that is inherently\n"
-          "robust to outliers). This more robust check strengthens the earlier finding:\n"
-          "without these two compounds, the LogP-activity relationship in the remaining\n"
-          "17 molecules is genuinely weak, plausibly explaining the authors' qualitative\n"
-          "judgment even though it wasn't stated as a formal outlier-exclusion analysis.")
+    def cooks_distance(rows_subset, logp_key):
+        ic50 = np.array([float(r["ic50_nM"]) for r in rows_subset])
+        y = np.log10(ic50)
+        x = np.array([float(r[logp_key]) for r in rows_subset])
+        names = [r["compound"] for r in rows_subset]
+        n = len(x)
+        X = np.column_stack([np.ones(n), x])
+        beta = np.linalg.lstsq(X, y, rcond=None)[0]
+        residuals = y - X @ beta
+        H = X @ np.linalg.inv(X.T @ X) @ X.T
+        h = np.diag(H)
+        p_params = X.shape[1]
+        mse = np.sum(residuals**2) / (n - p_params)
+        cooks_d = (residuals**2 / (p_params * mse)) * (h / (1 - h) ** 2)
+        threshold = 4 / n
+        return names, cooks_d, threshold
+
+    names, cooks_d, threshold = cooks_distance(detected, "paper_logp")
+    influential = [names[i] for i in range(len(names)) if cooks_d[i] > threshold]
+    print(f"Threshold (4/n): {threshold:.4f}")
+    print(f"Compounds flagged as influential (Cook's D > threshold): {influential}")
+
+    print("\nNote: this does NOT fully match the two compounds (A14, A2) picked by")
+    print("eye from the scatter plot. Cook's distance flags A8 and A14 -- A2, despite")
+    print("looking like a visual outlier, actually falls close to the overall trend line")
+    print("(low LogP with correspondingly high IC50); A8 is the more statistically")
+    print("influential point because it has low LogP but unexpectedly high potency")
+    print("(low IC50), working against the trend. Recall from dataset construction that")
+    print("A8 (furan) was already flagged for a large RDKit-vs-paper LogP discrepancy")
+    print("attributed to heterocycle-specific algorithm differences -- an interesting")
+    print("convergence between the structural and statistical analyses.")
+
+    print("\nCorrelation with the formally-identified influential points (A8, A14) removed:")
+    no_influential = [r for r in detected if r["compound"] not in ("A8", "A14")]
+    correlation_report(no_influential, "paper_logp", "Paper's LogP (no A8/A14)", use_log=True, method="pearson")
+    correlation_report(no_influential, "paper_logp", "Paper's LogP (no A8/A14)", use_log=True, method="spearman")
+    print("(Removing the formally-flagged points barely changes -- if anything slightly")
+    print(" strengthens -- the correlation, unlike removing the visually-picked A14/A2.")
+    print(" This means the earlier 'outliers explain the paper's claim' story needs to")
+    print(" be told more carefully: A14 does appear to be a genuine influential point by")
+    print(" both methods, but A2's apparent outlier status was a visual impression that")
+    print(" a formal diagnostic does not support.)")
 
     # Plot (log10(IC50), the pharmacologically standard scale, with both
     # Pearson and Spearman statistics annotated)
