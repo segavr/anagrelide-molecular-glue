@@ -58,10 +58,8 @@ See [notebooks/01_analysis_and_results.ipynb](notebooks/01_analysis_and_results.
 
 ## Reproducing the Results
 
-```bash
-# Requires RDKit, scipy, matplotlib, pandas
+pip install -r requirements.txt
 python scripts/run_all.py
-```
 
 Note: pdb_structural_analysis.py requires data/7EG0.pdb, which must be downloaded manually from https://files.rcsb.org/download/7EG0.pdb (this step is optional and will be skipped automatically if the file isn't present).
 

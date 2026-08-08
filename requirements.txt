@@ -1,0 +1,14 @@
+# Python dependencies for the anagrelide molecular-glue analysis project
+#
+# Install with: pip install -r requirements.txt
+# (or, if using Anaconda: conda install --file requirements.txt where possible;
+#  rdkit is best installed via conda-forge: conda install -c conda-forge rdkit)
+#
+# Tested with Python 3.13 on Windows (Anaconda/Miniconda distribution).
+
+rdkit>=2024.3
+scipy>=1.14
+matplotlib>=3.9
+pandas>=2.2
+numpy>=2.0
+jupyterlab>=4.0
