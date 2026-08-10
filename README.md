@@ -16,7 +16,7 @@ Chen et al., Nat Commun 2021, 12:6204, Supplementary Table 2 (22 anagrelide anal
 
 - All 23 compound structures built programmatically in RDKit (direct atom bonding, not text-edited SMILES), independently validated against the paper's reported LogP
 - Statistical analysis: Pearson correlation, multiple linear regression, t-tests (SciPy)
-- Classical PDE3A inhibitor structures (milrinone, amrinone, enoximone, cilostazol, cilostamide, imazodan) each verified against 2+ independent sources
+- Classical PDE3A inhibitor structures (12 compounds: milrinone, amrinone, enoximone, cilostazol, cilostamide, imazodan, papaverine, ensifentrine, pimobendan, trequinsin, olprinone, vesnarinone) each verified against 2+ independent sources, identified from the IUPHAR/BPS Guide to PHARMACOLOGY's curated PDE3A target page
 - Real 3D structure analysis using PDB 7EG0 (cryo-EM structure of the anagrelide-PDE3A-SLFN12 complex)
 
 ## Key Results
@@ -27,7 +27,7 @@ Chen et al., Nat Commun 2021, 12:6204, Supplementary Table 2 (22 anagrelide anal
 
 3. **Within this series, lipophilicity shows a stronger association with activity than the evaluated polarity-related descriptors**: LogP and molecular weight are redundant predictors (r = 0.879 with each other); TPSA and H-bonding descriptors show no significant correlation with IC50. This finding is specific to the ~19-compound anagrelide analog series analyzed here and should not be generalized beyond it.
 
-4. **Molecular glues are structurally distinguishable from classical PDE3A inhibitors**: significantly higher LogP (p = 0.035) and much lower TPSA (p = 0.0002, near-complete separation).
+4. **Molecular glues are structurally distinguishable from classical PDE3A inhibitors, but the distinguishing features needed correction with a larger sample**: with an expanded n=12 classical-inhibitor group (up from the original n=6), TPSA (p < 0.0001) and aromatic ring count (p = 0.001) are robustly significant, but LogP alone is no longer significant (p = 0.130, versus p = 0.035 with n=6). This is an important, honest correction — the smaller sample gave an unstable picture specifically for LogP. The robust distinguishing features are lower polarity and simpler ring systems, not hydrophobicity per se.
 
 5. **Independent 3D structural confirmation**: real atomic distances in PDB 7EG0 confirm the paper's stated binding mechanism (H-bonds to H961/Q1001, pi-stacking with F1004, hydrophobic contact with SLFN12's I557/I558) — corroborating the 2D descriptor findings from a completely different type of evidence.
 
@@ -67,7 +67,8 @@ Note: pdb_structural_analysis.py requires data/7EG0.pdb, which must be downloade
 
 ## Limitations
 
-- The classical-inhibitor comparison group is small (n=6); p-values should be read as suggestive, not conclusive
+- Even the expanded classical-inhibitor comparison group (n=12) is modest; p-values should be read as suggestive of a real pattern rather than definitive
+- One classical comparator (ensifentrine) is a dual PDE3/PDE4 inhibitor rather than PDE3-selective; included because it appears in IUPHAR's curated PDE3A inhibitor list with a measured PDE3A pIC50, but this is a real heterogeneity in the comparison group worth noting
 - Four compounds (A11, A16, A21, A22) have no detected IC50 and were excluded from correlation analyses
 - RDKit's Crippen LogP shows systematic discrepancies (~0.6-1.0 units) from the paper's reported LogP specifically for N/O-heterocyclic substituents, most likely reflecting different LogP algorithms rather than structural errors
 - This is a retrospective analysis of published data, not new experimental or computational (docking/DFT) work

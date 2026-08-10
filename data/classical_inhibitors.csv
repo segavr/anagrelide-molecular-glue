@@ -5,3 +5,9 @@ enoximone,classical_inhibitor,CSc1ccc(C(=O)c2[nH]c(=O)[nH]c2C)cc1,C12H12N2O2S,24
 cilostazol,classical_inhibitor,O=C1CCc2cc(OCCCCc3nnnn3C3CCCCC3)ccc2N1,C20H27N5O2,369.47,3.46,81.93,2,1,6
 cilostamide,classical_inhibitor,CN(C(=O)CCCOc1ccc2[nH]c(=O)ccc2c1)C1CCCCC1,C20H26N2O3,342.44,3.48,62.4,2,1,3
 imazodan,classical_inhibitor,O=C1CCC(c2ccc(-n3ccnc3)cc2)=NN1,C13H12N4O,240.27,1.49,59.28,2,1,4
+papaverine,classical_inhibitor,COc1ccc(Cc2nccc3cc(OC)c(OC)cc23)cc1OC,C20H21NO4,339.39,3.86,49.81,3,0,5
+ensifentrine,classical_inhibitor,COc1cc2c(cc1OC)-c1c/c(=N\c3c(C)cc(C)cc3C)n(CCNC(N)=O)c(=O)n1CC2,C26H31N5O4,477.57,2.72,112.87,3,2,7
+pimobendan,classical_inhibitor,COc1ccc(-c2nc3ccc(C4=NNC(=O)CC4C)cc3[nH]2)cc1,C19H18N4O2,334.38,3.1,79.37,3,2,4
+trequinsin,classical_inhibitor,COc1cc2c(cc1OC)-c1cc(=Nc3c(C)cc(C)cc3C)n(C)c(=O)n1CC2,C24H27N3O3,405.5,3.58,57.75,3,0,6
+olprinone,classical_inhibitor,Cc1[nH]c(=O)c(C#N)cc1-c1ccc2nccn2c1,C14H10N4O,250.26,1.87,73.95,3,1,4
+vesnarinone,classical_inhibitor,COc1ccc(C(=O)N2CCN(c3ccc4c(c3)CCC(=O)N4)CC2)cc1OC,C22H25N3O4,395.46,2.55,71.11,2,1,5
