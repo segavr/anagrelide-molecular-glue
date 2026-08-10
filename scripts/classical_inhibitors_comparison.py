@@ -60,6 +60,15 @@ DESCRIPTOR_LABELS = {
     "num_h_acceptors": "H-Acceptors",
 }
 
+# NOTE ON REPRODUCIBILITY: RDKit's CalcNumHBA (H-bond acceptor count) has
+# been observed to give slightly different values across RDKit versions for
+# some of these compounds (e.g. how aromatic heteroatoms or sulfoxide-type
+# groups are counted). TPSA, LogP, MW, and aromatic ring count were checked
+# and are stable across the versions tested. If your H-Acceptors numbers
+# differ slightly from those quoted in the README, this is the likely cause
+# -- it does not change the overall conclusion (H-Acceptors is significant
+# either way; TPSA remains the strongest and most stable finding).
+
 
 def build_classical_dataset():
     rows = []
