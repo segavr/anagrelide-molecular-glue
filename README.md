@@ -2,7 +2,7 @@
 
 ## Research Question
 
-Can the structure-activity relationships of the anagrelide molecular-glue series be quantitatively verified and extended using RDKit descriptors, and do they structurally distinguish this class from classical (non-glue) PDE3A inhibitors?
+Can the structure-activity relationships of the anagrelide molecular-glue series be quantitatively verified and extended using RDKit descriptors, and do they structurally distinguish this class from PDE3A inhibitors with an experimentally confirmed non-glue phenotype?
 
 ## Motivation
 
@@ -16,7 +16,7 @@ Chen et al., Nat Commun 2021, 12:6204, Supplementary Table 2 (22 anagrelide anal
 
 - All 23 compound structures built programmatically in RDKit (direct atom bonding, not text-edited SMILES), independently validated against the paper's reported LogP
 - Statistical analysis: Pearson correlation, multiple linear regression, t-tests (SciPy)
-- Classical PDE3A inhibitor structures (12 compounds: milrinone, amrinone, enoximone, cilostazol, cilostamide, imazodan, papaverine, ensifentrine, pimobendan, trequinsin, olprinone, vesnarinone) each verified against 2+ independent sources, identified from the IUPHAR/BPS Guide to PHARMACOLOGY's curated PDE3A target page
+- PDE3A inhibitor comparison set (11 compounds identified from the IUPHAR/BPS Guide to PHARMACOLOGY's curated PDE3A target page, each verified against 2+ independent sources), explicitly labeled by experimentally confirmed molecular-glue phenotype where known (per Yan et al., *Cell Chem Biol* 2022): 4 confirmed non-glue (milrinone, cilostazol, cilostamide, trequinsin), 7 of unknown glue status (amrinone, imazodan, papaverine, ensifentrine, pimobendan, olprinone, vesnarinone). Enoximone was excluded from this comparison set entirely — it is itself a confirmed molecular glue (Yan et al. 2022), not a non-glue inhibitor, and an earlier version of this project incorrectly included it as "classical"
 - Real 3D structure analysis using PDB 7EG0 (cryo-EM structure of the anagrelide-PDE3A-SLFN12 complex)
 
 ## Key Results
@@ -27,9 +27,9 @@ Chen et al., Nat Commun 2021, 12:6204, Supplementary Table 2 (22 anagrelide anal
 
 3. **Within this series, lipophilicity shows a stronger association with activity than the evaluated polarity-related descriptors**: LogP and molecular weight are redundant predictors (r = 0.879 with each other); TPSA and H-bonding descriptors show no significant correlation with IC50. This finding is specific to the ~19-compound anagrelide analog series analyzed here and should not be generalized beyond it.
 
-4. **Molecular glues are structurally distinguishable from classical PDE3A inhibitors, but the distinguishing features needed correction with a larger sample**: with an expanded n=12 classical-inhibitor group (up from the original n=6), TPSA (p < 0.0001) and aromatic ring count (p = 0.001) are robustly significant, but LogP alone is no longer significant (p = 0.130, versus p = 0.035 with n=6). This is an important, honest correction — the smaller sample gave an unstable picture specifically for LogP. The robust distinguishing features are lower polarity and simpler ring systems, not hydrophobicity per se.
+4. **Molecular glues show one robust structural difference from confirmed non-glue PDE3A inhibitors: lower polarity — but only one comparison group is scientifically defensible, and it is small**: against the 4 compounds with an experimentally confirmed non-glue phenotype (Yan et al. 2022), only TPSA differs significantly (p = 0.0023); LogP, aromatic ring count, and H-bonding descriptors do not. An earlier, larger comparison (n=12, before the glue-status correction described above) had suggested LogP and ring count were also significant — those differences do not hold up once the group is restricted to experimentally confirmed non-glue compounds. With n=4, this result should be read as suggestive, not definitive.
 
-5. **Independent 3D structural confirmation**: real atomic distances in PDB 7EG0 confirm the paper's stated binding mechanism (H-bonds to H961/Q1001, pi-stacking with F1004, hydrophobic contact with SLFN12's I557/I558) — corroborating the 2D descriptor findings from a completely different type of evidence.
+5. **Structural consistency check against real 3D structure**: real atomic distances in PDB 7EG0 are consistent with the paper's stated binding mechanism (short, H-bond-range contacts to H961/Q1001, a pi-stacking-range contact with F1004, hydrophobic/van-der-Waals-range contact with SLFN12's I557/I558). This validates the anagrelide structure used throughout this project and supports the paper's described mechanism at this single structure — it does not, on its own, establish that TPSA/polarity is *the* physicochemical property responsible for glue activity across the series; that link remains a hypothesis consistent with, not proven by, the 3D structure.
 
 See [notebooks/01_analysis_and_results.ipynb](notebooks/01_analysis_and_results.ipynb) for the full analysis with tables and plots.
 
